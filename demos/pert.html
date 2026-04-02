@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PERT Implementation - Stress Test</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=" />
+    <style>
+      body { 
+        background-color: #0f172a; 
+        color: #f8fafc; 
+        font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+        padding: 20px; /* Reduced padding for mobile */
+        line-height: 1.6;
+      }
+      .container { max-width: 1000px; margin: 0 auto; }
+      h1 { border-bottom: 2px solid #334155; padding-bottom: 10px; color: #f43f5e; }
+      h3 { margin-top: 40px; color: #94a3b8; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em;}
+      .mermaid { 
+        background: #1e293b; 
+        border: 1px solid #334155; 
+        border-radius: 12px; 
+        padding: 20px; 
+        margin-top: 10px; 
+        overflow-x: auto; /* Allow horizontal scroll for large diagrams */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PERT Implementation: Stress Test 🧪</h1>
+
+      <h3>1. Alphanumeric & Lexer Test</h3>
+      <p>Tests if the new Lexer handles mixed IDs and floats without "Expecting ID" errors.</p>
+      <pre class="mermaid">
+      pert
+        activity: Start-A, A-B1, A-B2, B1-End, B2-End
+        optimistic: 1.5, 2, 3.5, 1, 2
+        likely: 2.5, 4.5, 5, 2.5, 4
+        pessimistic: 6, 8.5, 9, 5, 7.5
+      </pre>
+
+      <h3>2. Parallel Pathing & Criticality</h3>
+      <p>Checks if the scheduling engine correctly identifies the red critical path across multiple branches.</p>
+      <pre class="mermaid">
+      pert
+        activity: 1-2, 1-3, 2-4, 3-4, 4-5
+        optimistic: 2, 10, 2, 2, 2
+        likely: 4, 12, 4, 4, 4
+        pessimistic: 6, 20, 6, 6, 6
+      </pre>
+
+      <h3>3. Vertical Leveling (Spider Stress)</h3>
+      <p>Tests the Y-spacing logic when one node has many successors.</p>
+      <pre class="mermaid">
+      pert
+        activity: 1-2, 1-3, 1-4, 1-5, 2-6, 3-6, 4-6, 5-6
+        optimistic: 1, 1, 1, 1, 1, 1, 1, 1
+        likely: 2, 2, 2, 2, 2, 2, 2, 2
+        pessimistic: 3, 3, 3, 3, 3, 3, 3, 3
+      </pre>
+    </div>
+
+    <script type="module">
+      import mermaid from './mermaid.esm.mjs';
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        securityLevel: 'loose',
+        pert: {
+          diagramPadding: 20,
+          nodeSpacing: 150,
+        }
+      });
+    </script>
+  </body>
+</html>

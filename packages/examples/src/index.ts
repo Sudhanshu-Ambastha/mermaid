@@ -26,9 +26,13 @@ import vennDiagram from './examples/venn.js';
 import treeViewDiagram from './examples/tree-view.js';
 import wardleyDiagram from './examples/wardley.js';
 import usecase from './examples/usecase.js';
+import cpm from './examples/cpm.js';
+import pert from './examples/pert.js';
 
 export const diagramData: DiagramMetadata[] = [
   usecase,
+  cpm,
+  pert,
   flowChart,
   c4,
   ishikawaDiagram,
